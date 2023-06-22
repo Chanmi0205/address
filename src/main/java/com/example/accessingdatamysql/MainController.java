@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,26 @@ public class MainController {
 			, @RequestParam String email) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
+
+	@PutMapping(path = "/user")
+	public @ResponseBody String updateUser(@RequestParam Integer id, @RequestParam String name,
+					@RequestParam String email) {
+			User n = new User();
+			n.setId(id);
+			n.setName(name);
+			n.setEmail(email);
+			userRepository.save(n);
+			return "Updated";
+	}
+
+
+	@DeleteMapping(path="/del")
+    public @ResponseBody String delUser(@RequestParam Integer id) {
+            User n = new User();
+            n.setId(id);
+            userRepository.delete(n);
+            return "Deleted";
+    }
 
 		User n = new User();
 		n.setName(name);
